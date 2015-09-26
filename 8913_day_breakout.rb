@@ -19,7 +19,7 @@ def daily_calc(today, data)
   end
 
   atr = prices.reduce(:+) / prices.length
-  
+
   h_89 = prices.max.to_f
   l_89 = prices.min
   h_13 = prices.last(13).max
@@ -63,9 +63,13 @@ def test_from(start, stop, data)
   results.inject(:+)
 end
 
-#today = DateTime.new(ARGV[0].to_i, ARGV[1].to_i, ARGV[2].to_i)
-today = DateTime.now
+if ARGV.empty?
+  today = DateTime.now
+  puts "Today (#{today.strftime('%-m/%-d/%y')}) you should... #{daily_calc(today, close_data)}"
+else
+  today = DateTime.new(ARGV[0].to_i, ARGV[1].to_i, ARGV[2].to_i)
+  puts "Today (#{today.strftime('%-m/%-d/%y')}) you should... #{daily_calc(today, close_data)}"
+end
 
 #puts test_from(today - 360, today, close_data).round(2)
-puts "Today (#{today.strftime('%-m/%-d/%y')}) you should... #{daily_calc(today, close_data)}"
 puts "KEY : LONG = 1, SHORT = 2, STOP_LONG = 3, STOP_SHORT = 4, STAY = 5"
